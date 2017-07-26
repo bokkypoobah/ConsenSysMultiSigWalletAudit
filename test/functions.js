@@ -115,6 +115,37 @@ function printTxData(name, txId) {
   console.log("RESULT: " + name + " gas=" + tx.gas + " gasUsed=" + txReceipt.gasUsed + " costETH=" + gasCostETH +
     " costUSD=" + gasCostUSD + " @ ETH/USD=" + ethPriceUSD + " gasPrice=" + gasPrice + " block=" + 
     txReceipt.blockNumber + " txId=" + txId);
+  var input = tx.input;
+  if (input.length >= 10 && input.length < 500) {
+    var methodId = input.substring(0, 10);
+    var data = input.substring(10);
+    console.log("RESULT: methodId: " + methodId);
+    // console.log("RESULT: data    : " + data);
+    if (data.length >= 64) {
+      console.log("RESULT: data 0  : " + data.substring(0, 64));
+    }
+    if (data.length >= 64+64) {
+      console.log("RESULT: data 1  : " + data.substring(0+64, 64+64));
+    }
+    if (data.length >= 64+64+64) {
+      console.log("RESULT: data 2  : " + data.substring(0+64+64, 64+64+64));
+    }
+    if (data.length >= 64+64+64+64) {
+      console.log("RESULT: data 3  : " + data.substring(0+64+64+64, 64+64+64+64));
+    }
+    if (data.length >= 64+64+64+64+64) {
+      console.log("RESULT: data 4  : " + data.substring(0+64+64+64+64, 64+64+64+64+64));
+    }
+    if (data.length >= 64+64+64+64+64+64) {
+      console.log("RESULT: data 5  : " + data.substring(0+64+64+64+64+64, 64+64+64+64+64+64));
+    }
+    if (data.length >= 64+64+64+64+64+64+64) {
+      console.log("RESULT: data 6  : " + data.substring(0+64+64+64+64+64+64, 64+64+64+64+64+64+64));
+    }
+    if (data.length >= 64+64+64+64+64+64+64+64) {
+      console.log("RESULT: data 7+ : " + data.substring(0+64+64+64+64+64+64+64));
+    }
+  }
 }
 
 function assertEtherBalance(account, expectedBalance) {
@@ -194,16 +225,19 @@ function printWalletContractDetails() {
     // var decimals = contract.decimals();
     console.log("RESULT: wallet.MAX_OWNER_COUNT=" + contract.MAX_OWNER_COUNT());
     console.log("RESULT: wallet.required=" + contract.required());
-    console.log("RESULT: wallet.transactionCount=" + contract.transactionCount());
+    console.log("RESULT: wallet.transactionCount[pending=n,executed=n] - [n,n]=" + contract.transactionCount(false, false) +
+        " [y,n]=" + contract.transactionCount(true, false) +
+        " [n,y]=" + contract.transactionCount(false, true) +
+        " [y,y]=" + contract.transactionCount(true, true));
     console.log("RESULT: wallet.getOwners=" + contract.getOwners());
     var ownersLength = contract.getOwnersLength();
     var i;
     for (i = 0; i < ownersLength; i++) {
       console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
     }
-//    for (i = 0; i < transactionCount; i++) {
-//      console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
-//    }
+    for (i = 0; i < contract.transactionCount(true, true); i++) {
+      console.log("RESULT: owner[" + i + "]=" + contract.transactions(i));
+    }
 //    console.log("RESULT: wallet.decimals=" + decimals);
 //    console.log("RESULT: wallet.totalSupply=" + contract.totalSupply().shift(-18));
 //    var startDate = contract.STARTDATE();
@@ -216,6 +250,13 @@ function printWalletContractDetails() {
 //        " / " + new Date(endDate * 1000).toGMTString());
 
     var latestBlock = eth.blockNumber;
+
+    var submissionEvent = contract.Submission({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    submissionEvent.watch(function (error, result) {
+      console.log("RESULT: Submission " + i++ + " #" + result.blockNumber + " transactionId=" + result.args.transactionId);
+    });
+    submissionEvent.stopWatching();
 
     var confirmationEvent = contract.Confirmation({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
@@ -232,13 +273,6 @@ function printWalletContractDetails() {
         " transactionId=" + result.args.transactionId);
     });
     revocationEvent.stopWatching();
-
-    var submissionEvent = contract.Submission({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
-    i = 0;
-    submissionEvent.watch(function (error, result) {
-      console.log("RESULT: Submission " + i++ + " #" + result.blockNumber + " transactionId=" + result.args.transactionId);
-    });
-    submissionEvent.stopWatching();
 
     var executionEvent = contract.Execution({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;

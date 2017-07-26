@@ -82,7 +82,7 @@ console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var deployWalletMessage = "Deploy Wallet Contract - 2 Of 4 Signatures Required";
+var deployWalletMessage = "Deploy Wallet Contract - 1 Of 2 Signatures Required";
 // -----------------------------------------------------------------------------
 console.log("RESULT: " + deployWalletMessage);
 var walletContract = web3.eth.contract(walletAbi);
@@ -90,7 +90,7 @@ console.log(JSON.stringify(walletContract));
 var walletTx = null;
 var walletAddress = null;
 
-var dct = walletContract.new([multisigOwner1, multisigOwner2, multisigOwner3, multisigOwner4], 2, {from: contractOwnerAccount, data: walletBin, gas: 6000000},
+var wallet = walletContract.new([multisigOwner1, multisigOwner2], 1, {from: contractOwnerAccount, data: walletBin, gas: 6000000},
   function(e, contract) {
     if (!e) {
       if (!contract.address) {
@@ -116,7 +116,7 @@ console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var sendEthMessage = "Send ETH";
+var sendEthMessage = "Send 1,000 ETH From Contract Owner To Multisig";
 // -----------------------------------------------------------------------------
 console.log("RESULT: " + sendEthMessage);
 var sendEthTx = eth.sendTransaction({from: contractOwnerAccount, to: walletAddress, value: web3.toWei(1000, "ether"), gas: 400000});
@@ -125,6 +125,23 @@ while (txpool.status.pending > 0) {
 printTxData("sendEthTx", sendEthTx);
 printBalances();
 failIfGasEqualsGasUsed(sendEthTx, sendEthMessage);
+printWalletContractDetails();
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+var multisigSendEthMessage = "Multisig Send 1 ETH From Multisig To Account 6";
+// -----------------------------------------------------------------------------
+console.log("RESULT: " + multisigSendEthMessage);
+var multisigSendEth1Tx = wallet.submitTransaction(account6, web3.toWei(1, "ether"), "", {from: contractOwnerAccount, gas: 400000});
+var multisigSendEth2Tx = wallet.submitTransaction(account7, web3.toWei(1, "ether"), "", {from: multisigOwner1, gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("multisigSendEth1Tx", multisigSendEth1Tx);
+printTxData("multisigSendEth2Tx", multisigSendEth2Tx);
+printBalances();
+passIfGasEqualsGasUsed(multisigSendEth1Tx, multisigSendEthMessage + " FAIL - ContractOwnerAccount -> Account6");
+failIfGasEqualsGasUsed(multisigSendEth2Tx, multisigSendEthMessage + " PASS - MultisigAccount1 -> Account7");
 printWalletContractDetails();
 console.log("RESULT: ");
 

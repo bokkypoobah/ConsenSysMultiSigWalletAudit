@@ -90,12 +90,17 @@ contract MultiSigWallet {
         _;
     }
 
+    // BK Ok - Check if owner exists in the isOwner mapping(owner => bool)
     modifier ownerExists(address owner) {
+        // BK Ok
         if (!isOwner[owner])
+            // BK Ok
             throw;
+        // BK Ok
         _;
     }
 
+    // BK Ok - Check if a transactionId exists
     modifier transactionExists(uint transactionId) {
         if (transactions[transactionId].destination == 0)
             throw;
@@ -108,9 +113,13 @@ contract MultiSigWallet {
         _;
     }
 
+    // BK Ok - Check that the owner has not already confirmed the specified transaction
     modifier notConfirmed(uint transactionId, address owner) {
+        // BK Ok
         if (confirmations[transactionId][owner])
+            // BK Ok
             throw;
+        // BK Ok
         _;
     }
 
@@ -120,9 +129,13 @@ contract MultiSigWallet {
         _;
     }
 
+    // BK Ok - Checking address is not null
     modifier notNull(address _address) {
+        // BK Ok
         if (_address == 0)
+            // BK Ok
             throw;
+        // BK Ok
         _;
     }
 
@@ -186,6 +199,7 @@ contract MultiSigWallet {
         public
         onlyWallet
         ownerDoesNotExist(owner)
+        // BK Ok - Owner not null
         notNull(owner)
         validRequirement(owners.length + 1, required)
     {
@@ -250,10 +264,14 @@ contract MultiSigWallet {
     /// @param data Transaction data payload.
     /// @return Returns transaction ID.
     function submitTransaction(address destination, uint value, bytes data)
+        // BK Ok
         public
+        // BK Ok
         returns (uint transactionId)
     {
+        // BK Ok - Does not check user is one of the owners
         transactionId = addTransaction(destination, value, data);
+        // BK Ok - Confirm the tx, and if sufficient confirmations, send the tx
         confirmTransaction(transactionId);
     }
 
@@ -261,12 +279,18 @@ contract MultiSigWallet {
     /// @param transactionId Transaction ID.
     function confirmTransaction(uint transactionId)
         public
+        // BK Ok - Owner must
         ownerExists(msg.sender)
+        // BK Ok - Note that this wallet can never send funds to 0x0
         transactionExists(transactionId)
+        // BK Ok - Check that the message sender has not already confirmed the txId
         notConfirmed(transactionId, msg.sender)
     {
+        // BK Ok - Record that the message send has confirmed the txId
         confirmations[transactionId][msg.sender] = true;
+        // BK Ok - Log event
         Confirmation(msg.sender, transactionId);
+        // BK Ok - Execute the tx if there is enough confirmations
         executeTransaction(transactionId);
     }
 
@@ -325,19 +349,27 @@ contract MultiSigWallet {
     /// @param value Transaction ether value.
     /// @param data Transaction data payload.
     /// @return Returns transaction ID.
+    // BK Ok
     function addTransaction(address destination, uint value, bytes data)
+        // BK Ok - Cannot be called externally
         internal
+        // BK Ok - Destination not null
         notNull(destination)
+        // BK Ok
         returns (uint transactionId)
     {
+        // BK Ok - First txId is 0
         transactionId = transactionCount;
+        // BK Next 6 Ok - Store transaction data by txId
         transactions[transactionId] = Transaction({
             destination: destination,
             value: value,
             data: data,
             executed: false
         });
+        // BK Ok - First txId, txCount = 1
         transactionCount += 1;
+        // BK Ok - Log event
         Submission(transactionId);
     }
 
@@ -374,11 +406,13 @@ contract MultiSigWallet {
 
     /// @dev Returns list of owners.
     /// @return List of owner addresses.
+    // BK Ok - Constant function
     function getOwners()
         public
         constant
         returns (address[])
     {
+        // BK Ok
         return owners;
     }
 
