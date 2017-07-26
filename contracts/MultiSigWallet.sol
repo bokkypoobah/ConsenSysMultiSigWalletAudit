@@ -1,19 +1,3 @@
-# ConsenSys MultiSig Wallet Audit (Work In Progress)
-
-The source code for [contracts/MultiSigWallet.sol](contracts/MultiSigWallet.sol) is the same as
-[https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol](https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol),
-with only the minimum solidity version statement upgraded from `pragma solidity 0.4.4;` to `pragma solidity ^0.4.11;`.
-
-To fund the independent audit of these sorts of public goods, please send a donation to [0x000001f568875f378bf6d170b790967fe429c81a](https://etherscan.io/address/0x000001f568875f378bf6d170b790967fe429c81a).
-
-<br />
-
-<hr />
-
-## Source Code
-
-```javascript
-// BK Ok
 pragma solidity ^0.4.11;
 
 
@@ -21,10 +5,8 @@ pragma solidity ^0.4.11;
 /// @author Stefan George - <stefan.george@consensys.net>
 contract MultiSigWallet {
 
-    // BK Ok
     uint constant public MAX_OWNER_COUNT = 50;
 
-    // BK Next 9 Ok
     event Confirmation(address indexed sender, uint indexed transactionId);
     event Revocation(address indexed sender, uint indexed transactionId);
     event Submission(uint indexed transactionId);
@@ -35,20 +17,13 @@ contract MultiSigWallet {
     event OwnerRemoval(address indexed owner);
     event RequirementChange(uint required);
 
-    // BK Ok - Mapping of TxId to Transaction
     mapping (uint => Transaction) public transactions;
-    // BK Ok - Mapping of TxId -> Owner -> Confirmation Y/N
     mapping (uint => mapping (address => bool)) public confirmations;
-    // BK Ok - Mapping of Owner -> Y/N
     mapping (address => bool) public isOwner;
-    // BK Ok - Array of owners
     address[] public owners;
-    // BK Ok - Number of required confirmations before a transaction can be executed for real
     uint public required;
-    // BK Ok - Count of the number of transactions
     uint public transactionCount;
 
-    // BK Next 6 Ok
     struct Transaction {
         address destination;
         uint value;
@@ -389,4 +364,3 @@ contract MultiSigWallet {
             _transactionIds[i - from] = transactionIdsTemp[i];
     }
 }
-```
