@@ -10,6 +10,16 @@ To help fund the independent audit of these sorts of public goods, please send y
 
 <hr />
 
+## Table Of Contents
+
+* [Testing](#testing)
+* [Source Code](#source-code)
+* [Function Signatures](#function-signatures)
+
+<br />
+
+<hr />
+
 ## Testing
 
 Testing being conducted in [test](test) (work in progress).
@@ -419,4 +429,36 @@ contract MultiSigWallet {
             _transactionIds[i - from] = transactionIdsTemp[i];
     }
 }
+```
+
+<br />
+
+<hr />
+
+## Function Signatures
+
+```
+Constant Signature Function
+-------- --------- ---------------------------------
+         7065cb48 addOwner(address)
+         ba51a6df changeRequirement(uint256)
+         c01a8c84 confirmTransaction(uint256)
+         ee22610b executeTransaction(uint256)
+         173825d9 removeOwner(address)
+         e20056e6 replaceOwner(address,address)
+         20ea8d86 revokeConfirmation(uint256)
+         c6427474 submitTransaction(address,uint256,bytes)
+y        d74f8edd  MAX_OWNER_COUNT()
+y        3411c81c confirmations(uint256,address)
+y        8b51d13f getConfirmationCount(uint256)
+y        b5dc40c3 getConfirmations(uint256)
+y        a0e67e2b getOwners()
+y        54741525 getTransactionCount(bool,bool)
+y        a8abe69a getTransactionIds(uint256,uint256,bool,bool)
+y        784547a7 isConfirmed(uint256)
+y        2f54bf6e isOwner(address)
+y        025e7c27 owners(uint256)
+y        dc8452cd required()
+y        b77bf600 transactionCount()
+y        9ace38c2 transactions(uint256)
 ```
