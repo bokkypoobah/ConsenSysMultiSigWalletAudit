@@ -1,27 +1,3 @@
-# ConsenSys MultiSig Wallet Audit (Work In Progress)
-
-The source code for [contracts/MultiSigWallet.sol](contracts/MultiSigWallet.sol) is the same as
-[https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol](https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol),
-with only the minimum solidity version statement upgraded from `pragma solidity 0.4.4;` to `pragma solidity ^0.4.11;`.
-
-To help fund the independent audit of these sorts of public goods, please send your donation to [0x000001f568875f378bf6d170b790967fe429c81a](https://etherscan.io/address/0x000001f568875f378bf6d170b790967fe429c81a).
-
-<br />
-
-<hr />
-
-## Testing
-
-Testing being conducted in [test](test) (work in progress).
-
-<br />
-
-<hr />
-
-## Source Code
-
-```javascript
-// BK Ok
 pragma solidity ^0.4.11;
 
 
@@ -29,10 +5,8 @@ pragma solidity ^0.4.11;
 /// @author Stefan George - <stefan.george@consensys.net>
 contract MultiSigWallet {
 
-    // BK Ok
     uint constant public MAX_OWNER_COUNT = 50;
 
-    // BK Next 9 Ok
     event Confirmation(address indexed sender, uint indexed transactionId);
     event Revocation(address indexed sender, uint indexed transactionId);
     event Submission(uint indexed transactionId);
@@ -43,28 +17,22 @@ contract MultiSigWallet {
     event OwnerRemoval(address indexed owner);
     event RequirementChange(uint required);
 
-    // BK Ok - Mapping of TxId to Transaction
     mapping (uint => Transaction) public transactions;
-    // BK Ok - Mapping of TxId -> Owner -> Confirmation Y/N
     mapping (uint => mapping (address => bool)) public confirmations;
-    // BK Ok - Mapping of Owner -> Y/N
     mapping (address => bool) public isOwner;
-    // BK Ok - Array of owners
     address[] public owners;
-    // BK Ok - Number of required confirmations before a transaction can be executed for real
     uint public required;
-    // BK Ok - Count of the number of transactions
     uint public transactionCount;
 
-    // BK Ok
+    // BK Instrumentation
+    function getOwnersLength() constant returns (uint) {
+        return owners.length;
+    }
+
     struct Transaction {
-        // BK Ok - Destination address for this transaction
         address destination;
-        // BK Ok - Amount of ETH to send with this transaction
         uint value;
-        // BK Ok - Any additional transaction data
         bytes data;
-        // BK Ok - Has this transaction been executed
         bool executed;
     }
 
@@ -139,22 +107,16 @@ contract MultiSigWallet {
     /// @dev Contract constructor sets initial owners and required number of confirmations.
     /// @param _owners List of initial owners.
     /// @param _required Number of required confirmations.
-    // BK Ok - Constructor
     function MultiSigWallet(address[] _owners, uint _required)
         public
-        // BK Ok - _owners.length > 0 && _owners.length <= MAX_OWNER_COUNT && _required != 0 && _required <= owners.length
         validRequirement(_owners.length, _required)
     {
         for (uint i=0; i<_owners.length; i++) {
-            // BK Ok - Checking for duplicate specified owner, or owner is 0x0
             if (isOwner[_owners[i]] || _owners[i] == 0)
                 throw;
-            // BK Ok - Save list of owners for duplicate check
             isOwner[_owners[i]] = true;
         }
-        // BK Ok - Save list of owners
         owners = _owners;
-        // BK Ok - Save list of confirmations required
         required = _required;
     }
 
@@ -407,4 +369,3 @@ contract MultiSigWallet {
             _transactionIds[i - from] = transactionIdsTemp[i];
     }
 }
-```

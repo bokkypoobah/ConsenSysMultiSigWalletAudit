@@ -10,9 +10,11 @@ MODE=${1:-test}
 GETHATTACHPOINT=`grep ^IPCFILE= settings.txt | sed "s/^.*=//"`
 PASSWORD=`grep ^PASSWORD= settings.txt | sed "s/^.*=//"`
 
-DAOCASINOTOKENSOL=`grep ^DAOCASINOTOKENSOL= settings.txt | sed "s/^.*=//"`
-DAOCASINOTOKENTEMPSOL=`grep ^DAOCASINOTOKENTEMPSOL= settings.txt | sed "s/^.*=//"`
-DAOCASINOTOKENJS=`grep ^DAOCASINOTOKENJS= settings.txt | sed "s/^.*=//"`
+CONTRACTSDIR=`grep ^CONTRACTSDIR= settings.txt | sed "s/^.*=//"`
+
+WALLETSOL=`grep ^WALLETSOL= settings.txt | sed "s/^.*=//"`
+WALLETTEMPSOL=`grep ^WALLETTEMPSOL= settings.txt | sed "s/^.*=//"`
+WALLETJS=`grep ^WALLETJS= settings.txt | sed "s/^.*=//"`
 
 DEPLOYMENTDATA=`grep ^DEPLOYMENTDATA= settings.txt | sed "s/^.*=//"`
 
@@ -36,43 +38,43 @@ STARTTIME_S=`date -r $STARTTIME -u`
 ENDTIME=`echo "$CURRENTTIME+60*3" | bc`
 ENDTIME_S=`date -r $ENDTIME -u`
 
-printf "MODE                  = '$MODE'\n"
-printf "GETHATTACHPOINT       = '$GETHATTACHPOINT'\n"
-printf "PASSWORD              = '$PASSWORD'\n"
-printf "DAOCASINOTOKENSOL     = '$DAOCASINOTOKENSOL'\n"
-printf "DAOCASINOTOKENTEMPSOL = '$DAOCASINOTOKENTEMPSOL'\n"
-printf "DAOCASINOTOKENJS      = '$DAOCASINOTOKENJS'\n"
-printf "DEPLOYMENTDATA        = '$DEPLOYMENTDATA'\n"
-printf "INCLUDEJS             = '$INCLUDEJS'\n"
-printf "TEST1OUTPUT           = '$TEST1OUTPUT'\n"
-printf "TEST1RESULTS          = '$TEST1RESULTS'\n"
-printf "CURRENTTIME           = '$CURRENTTIME' '$CURRENTTIMES'\n"
-printf "STARTTIME             = '$STARTTIME' '$STARTTIME_S'\n"
-printf "ENDTIME               = '$ENDTIME' '$ENDTIME_S'\n"
+printf "MODE            = '$MODE'\n" | tee $TEST1OUTPUT
+printf "GETHATTACHPOINT = '$GETHATTACHPOINT'\n" | tee -a $TEST1OUTPUT
+printf "PASSWORD        = '$PASSWORD'\n" | tee -a $TEST1OUTPUT
+printf "CONTRACTSDIR    = '$CONTRACTSDIR'\n" | tee -a $TEST1OUTPUT
+printf "WALLETSOL       = '$WALLETSOL'\n" | tee -a $TEST1OUTPUT
+printf "WALLETTEMPSOL   = '$WALLETTEMPSOL'\n" | tee -a $TEST1OUTPUT
+printf "WALLETJS        = '$WALLETJS'\n" | tee -a $TEST1OUTPUT
+printf "DEPLOYMENTDATA  = '$DEPLOYMENTDATA'\n" | tee -a $TEST1OUTPUT
+printf "INCLUDEJS       = '$INCLUDEJS'\n" | tee -a $TEST1OUTPUT
+printf "TEST1OUTPUT     = '$TEST1OUTPUT'\n" | tee -a $TEST1OUTPUT
+printf "TEST1RESULTS    = '$TEST1RESULTS'\n" | tee -a $TEST1OUTPUT
+printf "CURRENTTIME     = '$CURRENTTIME' '$CURRENTTIMES'\n" | tee -a $TEST1OUTPUT
+printf "STARTTIME       = '$STARTTIME' '$STARTTIME_S'\n" | tee -a $TEST1OUTPUT
+printf "ENDTIME         = '$ENDTIME' '$ENDTIME_S'\n" | tee -a $TEST1OUTPUT
 
 # Make copy of SOL file and modify start and end times ---
-`cp $DAOCASINOTOKENSOL $DAOCASINOTOKENTEMPSOL`
+`cp modifiedContracts/$WALLETSOL $WALLETTEMPSOL`
 
-# --- Modify dates ---
+# --- Modify any parameters? ---
 #`perl -pi -e "s/STARTDATE \= 1498741200;.*$/STARTDATE \= $STARTTIME; \/\/ $STARTTIME_S/" $DAOCASINOTOKENTEMPSOL`
 #`perl -pi -e "s/ENDDATE \= STARTDATE \+ 28 days;.*$/ENDDATE \= STARTDATE \+ 5 minutes;/" $DAOCASINOTOKENTEMPSOL`
 #`perl -pi -e "s/CAP \= 84417 ether;.*$/CAP \= 100 ether;/" $DAOCASINOTOKENTEMPSOL`
 
-DIFFS1=`diff $DAOCASINOTOKENSOL $DAOCASINOTOKENTEMPSOL`
-echo "--- Differences $DAOCASINOTOKENSOL $DAOCASINOTOKENTEMPSOL ---"
+DIFFS1=`diff $CONTRACTSDIR/$WALLETSOL $WALLETTEMPSOL`
+echo "--- Differences $CONTRACTSDIR/$WALLETSOL $WALLETTEMPSOL ---"
 echo "$DIFFS1"
 
-echo "var dctOutput=`solc --optimize --combined-json abi,bin,interface $DAOCASINOTOKENTEMPSOL`;" > $DAOCASINOTOKENJS
+echo "var walletOutput=`solc --optimize --combined-json abi,bin,interface $WALLETTEMPSOL`;" > $WALLETJS
 
-
-geth --verbosity 3 attach $GETHATTACHPOINT << EOF | tee $TEST1OUTPUT
-loadScript("$DAOCASINOTOKENJS");
+geth --verbosity 3 attach $GETHATTACHPOINT << EOF | tee -a $TEST1OUTPUT
+loadScript("$WALLETJS");
 loadScript("functions.js");
 
-var dctAbi = JSON.parse(dctOutput.contracts["$DAOCASINOTOKENTEMPSOL:DaoCasinoToken"].abi);
-var dctBin = "0x" + dctOutput.contracts["$DAOCASINOTOKENTEMPSOL:DaoCasinoToken"].bin;
+var walletAbi = JSON.parse(walletOutput.contracts["$WALLETTEMPSOL:MultiSigWallet"].abi);
+var walletBin = "0x" + walletOutput.contracts["$WALLETTEMPSOL:MultiSigWallet"].bin;
 
-console.log("DATA: dctAbi=" + JSON.stringify(dctAbi));
+console.log("DATA: walletAbi=" + JSON.stringify(walletAbi));
 
 unlockAccounts("$PASSWORD");
 printBalances();
@@ -80,25 +82,24 @@ console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var dctMessage = "Deploy Token Contract";
+var deployWalletMessage = "Deploy Wallet Contract - 2 Of 4 Signatures Required";
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + dctMessage);
-var dctContract = web3.eth.contract(dctAbi);
-console.log(JSON.stringify(dctContract));
-var dctTx = null;
-var dctAddress = null;
+console.log("RESULT: " + deployWalletMessage);
+var walletContract = web3.eth.contract(walletAbi);
+console.log(JSON.stringify(walletContract));
+var walletTx = null;
+var walletAddress = null;
 
-var dct = dctContract.new({from: contractOwnerAccount, data: dctBin, gas: 6000000},
+var dct = walletContract.new([multisigOwner1, multisigOwner2, multisigOwner3, multisigOwner4], 2, {from: contractOwnerAccount, data: walletBin, gas: 6000000},
   function(e, contract) {
     if (!e) {
       if (!contract.address) {
-        dctTx = contract.transactionHash;
+        walletTx = contract.transactionHash;
       } else {
-        dctAddress = contract.address;
-        addAccount(dctAddress, "BET Token Contract");
-        addDctContractAddressAndAbi(dctAddress, dctAbi);
-        addTokenContractAddressAndAbi(dctAddress, dctAbi);
-        console.log("DATA: dctAddress=" + dctAddress);
+        walletAddress = contract.address;
+        addAccount(walletAddress, "Wallet Contract");
+        addWalletContractAddressAndAbi(walletAddress, walletAbi);
+        console.log("DATA: walletAddress=" + walletAddress);
       }
     }
   }
@@ -107,12 +108,13 @@ var dct = dctContract.new({from: contractOwnerAccount, data: dctBin, gas: 600000
 while (txpool.status.pending > 0) {
 }
 
-printTxData("dctAddress=" + dctAddress, dctTx);
+printTxData("walletAddress=" + walletAddress, walletTx);
 printBalances();
-failIfGasEqualsGasUsed(dctTx, dctMessage);
-printDctContractDetails();
+failIfGasEqualsGasUsed(walletTx, deployWalletMessage);
+printWalletContractDetails();
 console.log("RESULT: ");
 
+exit;
 
 // -----------------------------------------------------------------------------
 var fillMessage = "Fill Token Balances";

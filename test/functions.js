@@ -9,20 +9,20 @@ var accountNames = {};
 
 addAccount(eth.accounts[0], "Account #0 - Miner");
 addAccount(eth.accounts[1], "Account #1 - Contract Owner");
-addAccount(eth.accounts[2], "Account #2 - Multisig");
-addAccount(eth.accounts[3], "Account #3");
-addAccount(eth.accounts[4], "Account #4");
-addAccount(eth.accounts[5], "Account #5");
+addAccount(eth.accounts[2], "Account #2 - Multisig Owner 1");
+addAccount(eth.accounts[3], "Account #3 - Multisig Owner 2");
+addAccount(eth.accounts[4], "Account #4 - Multisig Owner 3");
+addAccount(eth.accounts[5], "Account #5 - Multisig Owner 4");
 addAccount(eth.accounts[6], "Account #6");
 addAccount(eth.accounts[7], "Account #7");
 addAccount(eth.accounts[8], "Account #8");
 
 var minerAccount = eth.accounts[0];
 var contractOwnerAccount = eth.accounts[1];
-var multisig = eth.accounts[2];
-var account3 = eth.accounts[3];
-var account4 = eth.accounts[4];
-var account5 = eth.accounts[5];
+var multisigOwner1 = eth.accounts[2];
+var multisigOwner2 = eth.accounts[3];
+var multisigOwner3 = eth.accounts[4];
+var multisigOwner4 = eth.accounts[5];
 var account6 = eth.accounts[6];
 var account7 = eth.accounts[7];
 var account8 = eth.accounts[8];
@@ -175,40 +175,48 @@ function failIfGasEqualsGasUsedOrContractAddressNull(contractAddress, tx, msg) {
 
 
 //-----------------------------------------------------------------------------
-// Dct Contract
+// Wallet Contract
 //-----------------------------------------------------------------------------
-var dctContractAddress = null;
-var dctContractAbi = null;
+var walletContractAddress = null;
+var walletContractAbi = null;
 
-function addDctContractAddressAndAbi(address, abi) {
-  dctContractAddress = address;
-  dctContractAbi = abi;
+function addWalletContractAddressAndAbi(address, abi) {
+  walletContractAddress = address;
+  walletContractAbi = abi;
 }
 
-var dctFromBlock = 0;
-function printDctContractDetails() {
-  console.log("RESULT: dctContractAddress=" + dctContractAddress);
-  if (dctContractAddress != null && dctContractAbi != null) {
-    var contract = eth.contract(dctContractAbi).at(dctContractAddress);
-    var decimals = contract.decimals();
-    console.log("RESULT: dct.owner=" + contract.owner());
-    console.log("RESULT: dct.symbol=" + contract.symbol());
-    console.log("RESULT: dct.name=" + contract.name());
-    console.log("RESULT: dct.decimals=" + decimals);
-    console.log("RESULT: dct.totalSupply=" + contract.totalSupply().shift(-18));
+var walletFromBlock = 0;
+function printWalletContractDetails() {
+  // console.log("RESULT: walletContractAddress=" + walletContractAddress);
+  // console.log("RESULT: walletContractAbi=" + JSON.stringify(walletContractAbi));
+  if (walletContractAddress != null && walletContractAbi != null) {
+    var contract = eth.contract(walletContractAbi).at(walletContractAddress);
+    // var decimals = contract.decimals();
+    console.log("RESULT: wallet.MAX_OWNER_COUNT=" + contract.MAX_OWNER_COUNT());
+    console.log("RESULT: wallet.required=" + contract.required());
+    console.log("RESULT: wallet.transactionCount=" + contract.transactionCount());
+    var ownersLength = contract.getOwnersLength();
+    var i;
+    for (i = 0; i < ownersLength; i++) {
+      console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
+    }
+    for (i = 0; i < transactionCount; i++) {
+      console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
+    }
+    console.log("RESULT: wallet.decimals=" + decimals);
+    console.log("RESULT: wallet.totalSupply=" + contract.totalSupply().shift(-18));
     var startDate = contract.STARTDATE();
-    console.log("RESULT: dct.totalEthers=" + contract.totalEthers().shift(-18));
-    console.log("RESULT: dct.CAP=" + contract.CAP().shift(-18));
-    console.log("RESULT: dct.STARTDATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
+    console.log("RESULT: wallet.totalEthers=" + contract.totalEthers().shift(-18));
+    console.log("RESULT: wallet.CAP=" + contract.CAP().shift(-18));
+    console.log("RESULT: wallet.STARTDATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
         " / " + new Date(startDate * 1000).toGMTString());
     var endDate = contract.ENDDATE();
-    console.log("RESULT: dct.ENDDATE=" + endDate + " " + new Date(endDate * 1000).toUTCString()  + 
+    console.log("RESULT: wallet.ENDDATE=" + endDate + " " + new Date(endDate * 1000).toUTCString()  + 
         " / " + new Date(endDate * 1000).toGMTString());
 
     var latestBlock = eth.blockNumber;
-    var i;
 
-    var tokensBoughtEvent = contract.TokensBought({}, { fromBlock: dctFromBlock, toBlock: latestBlock });
+    var tokensBoughtEvent = contract.TokensBought({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
     tokensBoughtEvent.watch(function (error, result) {
       console.log("RESULT: TokensBought " + i++ + " #" + result.blockNumber + " buyer=" + result.args.buyer + 
@@ -221,7 +229,7 @@ function printDctContractDetails() {
     });
     tokensBoughtEvent.stopWatching();
 
-    var approvalEvents = contract.Approval({}, { fromBlock: dctFromBlock, toBlock: latestBlock });
+    var approvalEvents = contract.Approval({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
     approvalEvents.watch(function (error, result) {
       console.log("RESULT: Approval " + i++ + " #" + result.blockNumber + " _owner=" + result.args._owner + " _spender=" + result.args._spender + " _value=" +
@@ -229,7 +237,7 @@ function printDctContractDetails() {
     });
     approvalEvents.stopWatching();
 
-    var transferEvents = contract.Transfer({}, { fromBlock: dctFromBlock, toBlock: latestBlock });
+    var transferEvents = contract.Transfer({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
     transferEvents.watch(function (error, result) {
       console.log("RESULT: Transfer " + i++ + " #" + result.blockNumber + ": _from=" + result.args._from + " _to=" + result.args._to +
@@ -237,6 +245,6 @@ function printDctContractDetails() {
     });
     transferEvents.stopWatching();
 
-    dctFromBlock = latestBlock + 1;
+    walletFromBlock = latestBlock + 1;
   }
 }
