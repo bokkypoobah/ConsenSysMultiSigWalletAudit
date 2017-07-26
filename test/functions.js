@@ -195,55 +195,93 @@ function printWalletContractDetails() {
     console.log("RESULT: wallet.MAX_OWNER_COUNT=" + contract.MAX_OWNER_COUNT());
     console.log("RESULT: wallet.required=" + contract.required());
     console.log("RESULT: wallet.transactionCount=" + contract.transactionCount());
+    console.log("RESULT: wallet.getOwners=" + contract.getOwners());
     var ownersLength = contract.getOwnersLength();
     var i;
     for (i = 0; i < ownersLength; i++) {
       console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
     }
-    for (i = 0; i < transactionCount; i++) {
-      console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
-    }
-    console.log("RESULT: wallet.decimals=" + decimals);
-    console.log("RESULT: wallet.totalSupply=" + contract.totalSupply().shift(-18));
-    var startDate = contract.STARTDATE();
-    console.log("RESULT: wallet.totalEthers=" + contract.totalEthers().shift(-18));
-    console.log("RESULT: wallet.CAP=" + contract.CAP().shift(-18));
-    console.log("RESULT: wallet.STARTDATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
-        " / " + new Date(startDate * 1000).toGMTString());
-    var endDate = contract.ENDDATE();
-    console.log("RESULT: wallet.ENDDATE=" + endDate + " " + new Date(endDate * 1000).toUTCString()  + 
-        " / " + new Date(endDate * 1000).toGMTString());
+//    for (i = 0; i < transactionCount; i++) {
+//      console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
+//    }
+//    console.log("RESULT: wallet.decimals=" + decimals);
+//    console.log("RESULT: wallet.totalSupply=" + contract.totalSupply().shift(-18));
+//    var startDate = contract.STARTDATE();
+//    console.log("RESULT: wallet.totalEthers=" + contract.totalEthers().shift(-18));
+//    console.log("RESULT: wallet.CAP=" + contract.CAP().shift(-18));
+//    console.log("RESULT: wallet.STARTDATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
+//        " / " + new Date(startDate * 1000).toGMTString());
+//    var endDate = contract.ENDDATE();
+//    console.log("RESULT: wallet.ENDDATE=" + endDate + " " + new Date(endDate * 1000).toUTCString()  + 
+//        " / " + new Date(endDate * 1000).toGMTString());
 
     var latestBlock = eth.blockNumber;
 
-    var tokensBoughtEvent = contract.TokensBought({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    var confirmationEvent = contract.Confirmation({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
-    tokensBoughtEvent.watch(function (error, result) {
-      console.log("RESULT: TokensBought " + i++ + " #" + result.blockNumber + " buyer=" + result.args.buyer + 
-        " ethers=" + web3.fromWei(result.args.ethers, "ether") +
-        " newEtherBalance=" + web3.fromWei(result.args.newEtherBalance, "ether") + 
-        " tokens=" + result.args.tokens.shift(-decimals) + 
-        " multisigTokens=" + result.args.multisigTokens.shift(-decimals) + 
-        " newTotalSupply=" + result.args.newTotalSupply.shift(-decimals) + 
-        " tokensPerKEther=" + result.args.tokensPerKEther);
+    confirmationEvent.watch(function (error, result) {
+      console.log("RESULT: Confirmation " + i++ + " #" + result.blockNumber + " sender=" + result.args.sender + 
+        " transactionId=" + result.args.transactionId);
     });
-    tokensBoughtEvent.stopWatching();
+    confirmationEvent.stopWatching();
 
-    var approvalEvents = contract.Approval({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    var revocationEvent = contract.Revocation({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
-    approvalEvents.watch(function (error, result) {
-      console.log("RESULT: Approval " + i++ + " #" + result.blockNumber + " _owner=" + result.args._owner + " _spender=" + result.args._spender + " _value=" +
-        result.args._value.shift(-decimals));
+    revocationEvent.watch(function (error, result) {
+      console.log("RESULT: Revocation " + i++ + " #" + result.blockNumber + " sender=" + result.args.sender + 
+        " transactionId=" + result.args.transactionId);
     });
-    approvalEvents.stopWatching();
+    revocationEvent.stopWatching();
 
-    var transferEvents = contract.Transfer({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    var submissionEvent = contract.Submission({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
     i = 0;
-    transferEvents.watch(function (error, result) {
-      console.log("RESULT: Transfer " + i++ + " #" + result.blockNumber + ": _from=" + result.args._from + " _to=" + result.args._to +
-        " value=" + result.args._value.shift(-decimals));
+    submissionEvent.watch(function (error, result) {
+      console.log("RESULT: Submission " + i++ + " #" + result.blockNumber + " transactionId=" + result.args.transactionId);
     });
-    transferEvents.stopWatching();
+    submissionEvent.stopWatching();
+
+    var executionEvent = contract.Execution({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    executionEvent.watch(function (error, result) {
+      console.log("RESULT: Execution " + i++ + " #" + result.blockNumber + " transactionId=" + result.args.transactionId);
+    });
+    executionEvent.stopWatching();
+
+    var executionFailureEvent = contract.ExecutionFailure({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    executionFailureEvent.watch(function (error, result) {
+      console.log("RESULT: ExecutionFailure " + i++ + " #" + result.blockNumber + " transactionId=" + result.args.transactionId);
+    });
+    executionFailureEvent.stopWatching();
+
+    var depositEvent = contract.Deposit({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    depositEvent.watch(function (error, result) {
+      console.log("RESULT: Deposit " + i++ + " #" + result.blockNumber + " sender=" + result.args.sender +
+          " value=" + result.args.value.shift(-18));
+    });
+    depositEvent.stopWatching();
+
+    var ownerAdditionEvent = contract.OwnerAddition({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    ownerAdditionEvent.watch(function (error, result) {
+      console.log("RESULT: OwnerAddition " + i++ + " #" + result.blockNumber + " owner=" + result.args.owner);
+    });
+    ownerAdditionEvent.stopWatching();
+
+    var ownerRemovalEvent = contract.OwnerRemoval({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    ownerRemovalEvent.watch(function (error, result) {
+      console.log("RESULT: OwnerRemoval " + i++ + " #" + result.blockNumber + " owner=" + result.args.owner);
+    });
+    ownerRemovalEvent.stopWatching();
+
+    var requirementChangeEvent = contract.RequirementChange({}, { fromBlock: walletFromBlock, toBlock: latestBlock });
+    i = 0;
+    requirementChangeEvent.watch(function (error, result) {
+      console.log("RESULT: RequirementChange " + i++ + " #" + result.blockNumber + " required=" + result.args.required);
+    });
+    requirementChangeEvent.stopWatching();
 
     walletFromBlock = latestBlock + 1;
   }

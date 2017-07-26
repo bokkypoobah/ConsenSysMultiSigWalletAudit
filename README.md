@@ -116,20 +116,32 @@ contract MultiSigWallet {
         _;
     }
 
+    // BK Ok
     modifier validRequirement(uint ownerCount, uint _required) {
+        // BK Ok - Cannot have more than 50 owners
         if (   ownerCount > MAX_OWNER_COUNT
+            // BK Ok - Number of signatures required must be less than or equal the number of owners
+            //       - Otherwise you would have a wallet that cannot sign any transactions, including changing it's own parameters
             || _required > ownerCount
+            // BK Ok - Must have at least one signature required
             || _required == 0
+            // BK Ok - Must have at least one owner
             || ownerCount == 0)
+            // BK Ok - Throw error if conditions not match
             throw;
+        // BK Ok
         _;
     }
 
     /// @dev Fallback function allows to deposit ether.
+    // BK OK - Receive ETH that will accumulate in this wallet contract
     function()
+        // BK Ok
         payable
     {
+        // BK Ok
         if (msg.value > 0)
+            // BK Ok - Log event
             Deposit(msg.sender, msg.value);
     }
 
@@ -139,7 +151,7 @@ contract MultiSigWallet {
     /// @dev Contract constructor sets initial owners and required number of confirmations.
     /// @param _owners List of initial owners.
     /// @param _required Number of required confirmations.
-    // BK Ok - Constructor
+    // BK Ok - Constructor. Will be executed when this contract is deployed, but the code won't be included in the blockchain
     function MultiSigWallet(address[] _owners, uint _required)
         public
         // BK Ok - _owners.length > 0 && _owners.length <= MAX_OWNER_COUNT && _required != 0 && _required <= owners.length

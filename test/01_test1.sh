@@ -114,6 +114,21 @@ failIfGasEqualsGasUsed(walletTx, deployWalletMessage);
 printWalletContractDetails();
 console.log("RESULT: ");
 
+
+// -----------------------------------------------------------------------------
+var sendEthMessage = "Send ETH";
+// -----------------------------------------------------------------------------
+console.log("RESULT: " + sendEthMessage);
+var sendEthTx = eth.sendTransaction({from: contractOwnerAccount, to: walletAddress, value: web3.toWei(1000, "ether"), gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("sendEthTx", sendEthTx);
+printBalances();
+failIfGasEqualsGasUsed(sendEthTx, sendEthMessage);
+printWalletContractDetails();
+console.log("RESULT: ");
+
+
 exit;
 
 // -----------------------------------------------------------------------------
