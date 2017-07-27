@@ -145,6 +145,46 @@ failIfGasEqualsGasUsed(multisigSendEth2Tx, multisigSendEthMessage + " PASS - Mul
 printWalletContractDetails();
 console.log("RESULT: ");
 
+var addOwnerSig = "7065cb48";
+var removeOwnerSig = "173825d9";
+
+// -----------------------------------------------------------------------------
+var multisigAddOwnerMessage = "Multisig Add Owner";
+// -----------------------------------------------------------------------------
+console.log("RESULT: " + multisigAddOwnerMessage);
+var addOwner1 = "0x" + addOwnerSig + "000000000000000000000000" + "a44a08d3f6933c69212114bb66e2df1813651844";
+var addOwner2 = "0x" + addOwnerSig + "000000000000000000000000" + "a55a151eb00fded1634d27d1127b4be4627079ea";
+var multisigAddOwner1Tx = wallet.submitTransaction(walletAddress, 0, addOwner1, {from: contractOwnerAccount, gas: 400000});
+var multisigAddOwner2Tx = wallet.submitTransaction(walletAddress, 0, addOwner2, {from: multisigOwner1, gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("multisigAddOwner1Tx", multisigAddOwner1Tx);
+printTxData("multisigAddOwner2Tx", multisigAddOwner2Tx);
+printBalances();
+passIfGasEqualsGasUsed(multisigAddOwner1Tx, multisigAddOwnerMessage + " FAIL - From ContractOwnerAccount, Not Owner - Add ac4");
+failIfGasEqualsGasUsed(multisigAddOwner2Tx, multisigAddOwnerMessage + " PASS - From MultisigAccount1 - Add ac5");
+printWalletContractDetails();
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+var multisigRemoveOwnerMessage = "Multisig Remove Owner";
+// -----------------------------------------------------------------------------
+console.log("RESULT: " + multisigRemoveOwnerMessage);
+var removeOwner1 = "0x" + removeOwnerSig + "000000000000000000000000" + "a33a6c312d9ad0e0f2e95541beed0cc081621fd0";
+var removeOwner2 = "0x" + removeOwnerSig + "000000000000000000000000" + "a55a151eb00fded1634d27d1127b4be4627079ea";
+var multisigRemoveOwner1Tx = wallet.submitTransaction(walletAddress, 0, removeOwner1, {from: contractOwnerAccount, gas: 400000});
+var multisigRemoveOwner2Tx = wallet.submitTransaction(walletAddress, 0, removeOwner2, {from: multisigOwner1, gas: 400000});
+while (txpool.status.pending > 0) {
+}
+printTxData("multisigRemoveOwner1Tx", multisigRemoveOwner1Tx);
+printTxData("multisigRemoveOwner2Tx", multisigRemoveOwner2Tx);
+printBalances();
+passIfGasEqualsGasUsed(multisigRemoveOwner1Tx, multisigRemoveOwnerMessage + " FAIL - From ContractOwnerAccount, Not Owner - Remov ac3");
+failIfGasEqualsGasUsed(multisigRemoveOwner2Tx, multisigRemoveOwnerMessage + " PASS - From MultisigAccount1 - Remove ac5");
+printWalletContractDetails();
+console.log("RESULT: ");
+
 
 exit;
 

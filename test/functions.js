@@ -225,18 +225,18 @@ function printWalletContractDetails() {
     // var decimals = contract.decimals();
     console.log("RESULT: wallet.MAX_OWNER_COUNT=" + contract.MAX_OWNER_COUNT());
     console.log("RESULT: wallet.required=" + contract.required());
-    console.log("RESULT: wallet.transactionCount[pending=n,executed=n] - [n,n]=" + contract.transactionCount(false, false) +
-        " [y,n]=" + contract.transactionCount(true, false) +
-        " [n,y]=" + contract.transactionCount(false, true) +
-        " [y,y]=" + contract.transactionCount(true, true));
+    console.log("RESULT: wallet.transactionCount[pending=n,executed=n] - [n,n]=" + contract.getTransactionCount(false, false) +
+        " [y,n]=" + contract.getTransactionCount(true, false) +
+        " [n,y]=" + contract.getTransactionCount(false, true) +
+        " [y,y]=" + contract.getTransactionCount(true, true));
     console.log("RESULT: wallet.getOwners=" + contract.getOwners());
     var ownersLength = contract.getOwnersLength();
     var i;
     for (i = 0; i < ownersLength; i++) {
       console.log("RESULT: owner[" + i + "]=" + contract.owners(i));
     }
-    for (i = 0; i < contract.transactionCount(true, true); i++) {
-      console.log("RESULT: owner[" + i + "]=" + contract.transactions(i));
+    for (i = 0; i < contract.transactionCount(); i++) {
+      console.log("RESULT: tx[" + i + "]=" + contract.transactions(i));
     }
 //    console.log("RESULT: wallet.decimals=" + decimals);
 //    console.log("RESULT: wallet.totalSupply=" + contract.totalSupply().shift(-18));

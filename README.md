@@ -84,9 +84,13 @@ contract MultiSigWallet {
         _;
     }
 
+    // BK Ok - Owner does not exist in the isOwner mapping, or the isOwner entry is set to false
     modifier ownerDoesNotExist(address owner) {
+        // BK Ok
         if (isOwner[owner])
+            // BK Ok
             throw;
+        // BK Ok
         _;
     }
 
@@ -197,14 +201,20 @@ contract MultiSigWallet {
     /// @param owner Address of new owner.
     function addOwner(address owner)
         public
+        // BK Ok - Only the wallet can execute this function
         onlyWallet
+        // BK Ok - Owner does not exist in the isOwner mapping or the isOwner entry is set to false
         ownerDoesNotExist(owner)
         // BK Ok - Owner not null
         notNull(owner)
+        // BK Ok - (_owners.length+1) > 0 && (_owners.length+1) <= MAX_OWNER_COUNT && _required != 0 && _required <= (owners.length+1)
         validRequirement(owners.length + 1, required)
     {
+        // BK Ok - Set the isOwner entry to true
         isOwner[owner] = true;
+        // BK Ok - Add the owner to the owners array
         owners.push(owner);
+        // BK Ok - Log event
         OwnerAddition(owner);
     }
 
