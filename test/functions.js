@@ -238,16 +238,11 @@ function printWalletContractDetails() {
     for (i = 0; i < contract.transactionCount(); i++) {
       console.log("RESULT: tx[" + i + "]=" + contract.transactions(i));
     }
-//    console.log("RESULT: wallet.decimals=" + decimals);
-//    console.log("RESULT: wallet.totalSupply=" + contract.totalSupply().shift(-18));
-//    var startDate = contract.STARTDATE();
-//    console.log("RESULT: wallet.totalEthers=" + contract.totalEthers().shift(-18));
-//    console.log("RESULT: wallet.CAP=" + contract.CAP().shift(-18));
-//    console.log("RESULT: wallet.STARTDATE=" + startDate + " " + new Date(startDate * 1000).toUTCString()  + 
-//        " / " + new Date(startDate * 1000).toGMTString());
-//    var endDate = contract.ENDDATE();
-//    console.log("RESULT: wallet.ENDDATE=" + endDate + " " + new Date(endDate * 1000).toUTCString()  + 
-//        " / " + new Date(endDate * 1000).toGMTString());
+    for (i = 0; i < contract.transactionCount(); i++) {
+      for (var j = 0; j < ownersLength; j++) {
+        console.log("RESULT: confirmations[" + i + ", " + contract.owners(j) + "]=" + contract.confirmations(i, contract.owners(j)));
+      }
+    }
 
     var latestBlock = eth.blockNumber;
 

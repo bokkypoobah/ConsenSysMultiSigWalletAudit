@@ -1,6 +1,6 @@
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       10.000000000000000000           0.000000000000000000 Account #0 - Miner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       15.000000000000000000           0.000000000000000000 Account #0 - Miner
  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433        0.000000000000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Multisig Owner 1
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Multisig Owner 2
@@ -15,10 +15,10 @@
 
 
 Deploy Wallet Contract - 1 Of 2 Signatures Required
-walletAddress=0xd53380f36e665634cf48ec4745c7095cde2c9d7f gas=6000000 gasUsed=1733036 costETH=0.031194648 costUSD=11.86613215272 @ ETH/USD=380.39 gasPrice=18000000000 block=2753 txId=0x25b01c2609b32cbec050dc97f4d9f52ac1c8d995d06e78dfca7bea859bb663f1
+walletAddress=0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d gas=6000000 gasUsed=1733036 costETH=0.031194648 costUSD=11.86613215272 @ ETH/USD=380.39 gasPrice=18000000000 block=2816 txId=0xaf1bc342217f01986057c98504cb6279f037593dd0fd244b206f0bd2daf80658
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
- 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       20.031194648000000000           0.000000000000000000 Account #0 - Miner
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       25.031194648000000000           0.000000000000000000 Account #0 - Miner
  1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.031194648000000000           0.000000000000000000 Account #1 - Contract Owner
  2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Multisig Owner 1
  3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Multisig Owner 2
@@ -27,7 +27,7 @@ walletAddress=0xd53380f36e665634cf48ec4745c7095cde2c9d7f gas=6000000 gasUsed=173
  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
- 9 0xd53380f36e665634cf48ec4745c7095cde2c9d7f        0.000000000000000000           0.000000000000000000 Wallet Contract
+ 9 0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d        0.000000000000000000           0.000000000000000000 Wallet Contract
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
                                                                                     0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -41,7 +41,7 @@ owner[0]=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 owner[1]=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0
 
 Send 1,000 ETH From Contract Owner To Multisig
-sendEthTx gas=400000 gasUsed=22550 costETH=0.0004059 costUSD=0.154400301 @ ETH/USD=380.39 gasPrice=18000000000 block=2756 txId=0xc85e66bd3591073b9664f039a1e9ace4ce3b72ee475dbfb56419ca7b713a5994
+sendEthTx gas=400000 gasUsed=22550 costETH=0.0004059 costUSD=0.154400301 @ ETH/USD=380.39 gasPrice=18000000000 block=2818 txId=0x1a1f2fbfd05ed73653f377746ae50093b2360c10bb60943082a40a45659e8903
  # Account                                             EtherBalanceChange                          Token Name
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
  0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e       35.031600548000000000           0.000000000000000000 Account #0 - Miner
@@ -53,7 +53,7 @@ sendEthTx gas=400000 gasUsed=22550 costETH=0.0004059 costUSD=0.154400301 @ ETH/U
  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
- 9 0xd53380f36e665634cf48ec4745c7095cde2c9d7f     1000.000000000000000000           0.000000000000000000 Wallet Contract
+ 9 0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d     1000.000000000000000000           0.000000000000000000 Wallet Contract
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
                                                                                     0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -65,17 +65,17 @@ wallet.transactionCount[pending=n,executed=n] - [n,n]=0 [y,n]=0 [n,y]=0 [y,y]=0
 wallet.getOwners=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976,0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0
 owner[0]=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 owner[1]=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0
-Deposit 0 #2756 sender=0xa11aae29840fbb5c86e6fd4cf809eba183aef433 value=1000
+Deposit 0 #2818 sender=0xa11aae29840fbb5c86e6fd4cf809eba183aef433 value=1000
 
 Multisig Send 1 ETH From Multisig To Account 6
-multisigSendEth1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=2758 txId=0x78b29d0fed989f59c144eb9996e772dbc1d5de1c72d388db89e0afd127c13a2d
+multisigSendEth1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=2820 txId=0x01c89f07582f57e831f3760ad5e9c3aad5d13ede46867a05856791c0b1862fd5
 methodId: 0xc6427474
 data 0  : 000000000000000000000000a66a85ede0cbe03694aa9d9de0bb19c99ff55bd9
 data 1  : 0000000000000000000000000000000000000000000000000de0b6b3a7640000
 data 2  : 0000000000000000000000000000000000000000000000000000000000000060
 data 3  : 0000000000000000000000000000000000000000000000000000000000000000
 data 4  : 0000000000000000000000000000000000000000000000000000000000000000
-multisigSendEth2Tx gas=400000 gasUsed=163507 costETH=0.002943126 costUSD=1.11953569914 @ ETH/USD=380.39 gasPrice=18000000000 block=2758 txId=0xa2c5508aede8f167aafc308b19eaf8e064a4d2d3e975481bb8744b2a9d1ba7a3
+multisigSendEth2Tx gas=400000 gasUsed=163507 costETH=0.002943126 costUSD=1.11953569914 @ ETH/USD=380.39 gasPrice=18000000000 block=2820 txId=0xddfe7225bf325e50f690f338ff32713fd3d0f4a1db6b4e00b0f866a3cea93c74
 methodId: 0xc6427474
 data 0  : 000000000000000000000000a77a2b9d4b1c010a22a7c565dc418cef683dbcec
 data 1  : 0000000000000000000000000000000000000000000000000de0b6b3a7640000
@@ -93,7 +93,7 @@ data 4  : 0000000000000000000000000000000000000000000000000000000000000000
  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        1.000000000000000000           0.000000000000000000 Account #7
  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
- 9 0xd53380f36e665634cf48ec4745c7095cde2c9d7f      999.000000000000000000           0.000000000000000000 Wallet Contract
+ 9 0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d      999.000000000000000000           0.000000000000000000 Wallet Contract
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
                                                                                     0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -107,22 +107,24 @@ wallet.getOwners=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976,0xa33a6c312d9ad0e0f2
 owner[0]=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 owner[1]=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0
 tx[0]=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec,1000000000000000000,0x,true
-Submission 0 #2758 transactionId=0
-Confirmation 0 #2758 sender=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 transactionId=0
-Execution 0 #2758 transactionId=0
+confirmations[0, 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=true
+confirmations[0, 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=false
+Submission 0 #2820 transactionId=0
+Confirmation 0 #2820 sender=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 transactionId=0
+Execution 0 #2820 transactionId=0
 
 Multisig Add Owner
-multisigAddOwner1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=2760 txId=0x99b6cba7043b9fad52e033a6796f51159f630f572f7d9579a90369656633be96
+multisigAddOwner1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=2822 txId=0xd1124f718d4e64b684c822c7b13144dd2182c721859ba5efe1efe6e0b814cf94
 methodId: 0xc6427474
-data 0  : 000000000000000000000000d53380f36e665634cf48ec4745c7095cde2c9d7f
+data 0  : 000000000000000000000000e6faa6fd9baba50ebb05eadc8fad293e4d30d32d
 data 1  : 0000000000000000000000000000000000000000000000000000000000000000
 data 2  : 0000000000000000000000000000000000000000000000000000000000000060
 data 3  : 0000000000000000000000000000000000000000000000000000000000000024
 data 4  : 7065cb48000000000000000000000000a44a08d3f6933c69212114bb66e2df18
 data 5  : 1365184400000000000000000000000000000000000000000000000000000000
-multisigAddOwner2Tx gas=400000 gasUsed=216442 costETH=0.003895956 costUSD=1.48198270284 @ ETH/USD=380.39 gasPrice=18000000000 block=2760 txId=0x50925914292fb2d8c849a748d2662b42143db9f148fce1e45ea3ae24a748d94b
+multisigAddOwner2Tx gas=400000 gasUsed=216442 costETH=0.003895956 costUSD=1.48198270284 @ ETH/USD=380.39 gasPrice=18000000000 block=2822 txId=0x0f28e0ee25d2724082aa78c5938d43120b451cf9eaac4044c0de9f49dc23ce40
 methodId: 0xc6427474
-data 0  : 000000000000000000000000d53380f36e665634cf48ec4745c7095cde2c9d7f
+data 0  : 000000000000000000000000e6faa6fd9baba50ebb05eadc8fad293e4d30d32d
 data 1  : 0000000000000000000000000000000000000000000000000000000000000000
 data 2  : 0000000000000000000000000000000000000000000000000000000000000060
 data 3  : 0000000000000000000000000000000000000000000000000000000000000024
@@ -139,7 +141,7 @@ data 5  : 627079ea00000000000000000000000000000000000000000000000000000000
  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        1.000000000000000000           0.000000000000000000 Account #7
  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
- 9 0xd53380f36e665634cf48ec4745c7095cde2c9d7f      999.000000000000000000           0.000000000000000000 Wallet Contract
+ 9 0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d      999.000000000000000000           0.000000000000000000 Wallet Contract
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
                                                                                     0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -154,24 +156,30 @@ owner[0]=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 owner[1]=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0
 owner[2]=0xa55a151eb00fded1634d27d1127b4be4627079ea
 tx[0]=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec,1000000000000000000,0x,true
-tx[1]=0xd53380f36e665634cf48ec4745c7095cde2c9d7f,0,0x7065cb48000000000000000000000000a55a151eb00fded1634d27d1127b4be4627079ea,true
-Submission 0 #2760 transactionId=1
-Confirmation 0 #2760 sender=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 transactionId=1
-Execution 0 #2760 transactionId=1
-OwnerAddition 0 #2760 owner=0xa55a151eb00fded1634d27d1127b4be4627079ea
+tx[1]=0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d,0,0x7065cb48000000000000000000000000a55a151eb00fded1634d27d1127b4be4627079ea,true
+confirmations[0, 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=true
+confirmations[0, 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=false
+confirmations[0, 0xa55a151eb00fded1634d27d1127b4be4627079ea]=false
+confirmations[1, 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=true
+confirmations[1, 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=false
+confirmations[1, 0xa55a151eb00fded1634d27d1127b4be4627079ea]=false
+Submission 0 #2822 transactionId=1
+Confirmation 0 #2822 sender=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 transactionId=1
+Execution 0 #2822 transactionId=1
+OwnerAddition 0 #2822 owner=0xa55a151eb00fded1634d27d1127b4be4627079ea
 
 Multisig Remove Owner
-multisigRemoveOwner1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=2762 txId=0x021fb39345f082f9152fff11dbffaf6b90896cd7873e5ecf4c69085e1e156b61
+multisigRemoveOwner1Tx gas=400000 gasUsed=400000 costETH=0.0072 costUSD=2.738808 @ ETH/USD=380.39 gasPrice=18000000000 block=2824 txId=0xaa908d05ebab55f37d61bd67d7e887c7fb8bd4c62156e0d6e7b8ad0ef383bef1
 methodId: 0xc6427474
-data 0  : 000000000000000000000000d53380f36e665634cf48ec4745c7095cde2c9d7f
+data 0  : 000000000000000000000000e6faa6fd9baba50ebb05eadc8fad293e4d30d32d
 data 1  : 0000000000000000000000000000000000000000000000000000000000000000
 data 2  : 0000000000000000000000000000000000000000000000000000000000000060
 data 3  : 0000000000000000000000000000000000000000000000000000000000000024
 data 4  : 173825d9000000000000000000000000a33a6c312d9ad0e0f2e95541beed0cc0
 data 5  : 81621fd000000000000000000000000000000000000000000000000000000000
-multisigRemoveOwner2Tx gas=400000 gasUsed=157021 costETH=0.002826378 costUSD=1.07512592742 @ ETH/USD=380.39 gasPrice=18000000000 block=2762 txId=0x91875cdd664e2f8e9a82d3671560ea0fa8316e1e0bddc04d9cdf6036cdbca9f5
+multisigRemoveOwner2Tx gas=400000 gasUsed=157021 costETH=0.002826378 costUSD=1.07512592742 @ ETH/USD=380.39 gasPrice=18000000000 block=2824 txId=0x59f86e5490fd0b3f47629037b1cbdb0d3a400c321a6abd05c1bd957b67134621
 methodId: 0xc6427474
-data 0  : 000000000000000000000000d53380f36e665634cf48ec4745c7095cde2c9d7f
+data 0  : 000000000000000000000000e6faa6fd9baba50ebb05eadc8fad293e4d30d32d
 data 1  : 0000000000000000000000000000000000000000000000000000000000000000
 data 2  : 0000000000000000000000000000000000000000000000000000000000000060
 data 3  : 0000000000000000000000000000000000000000000000000000000000000024
@@ -188,7 +196,7 @@ data 5  : 627079ea00000000000000000000000000000000000000000000000000000000
  6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
  7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        1.000000000000000000           0.000000000000000000 Account #7
  8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
- 9 0xd53380f36e665634cf48ec4745c7095cde2c9d7f      999.000000000000000000           0.000000000000000000 Wallet Contract
+ 9 0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d      999.000000000000000000           0.000000000000000000 Wallet Contract
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
                                                                                     0.000000000000000000 Total Token Balances
 -- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
@@ -202,10 +210,16 @@ wallet.getOwners=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976,0xa33a6c312d9ad0e0f2
 owner[0]=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976
 owner[1]=0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0
 tx[0]=0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec,1000000000000000000,0x,true
-tx[1]=0xd53380f36e665634cf48ec4745c7095cde2c9d7f,0,0x7065cb48000000000000000000000000a55a151eb00fded1634d27d1127b4be4627079ea,true
-tx[2]=0xd53380f36e665634cf48ec4745c7095cde2c9d7f,0,0x173825d9000000000000000000000000a55a151eb00fded1634d27d1127b4be4627079ea,true
-Submission 0 #2762 transactionId=2
-Confirmation 0 #2762 sender=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 transactionId=2
-Execution 0 #2762 transactionId=2
-OwnerRemoval 0 #2762 owner=0xa55a151eb00fded1634d27d1127b4be4627079ea
+tx[1]=0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d,0,0x7065cb48000000000000000000000000a55a151eb00fded1634d27d1127b4be4627079ea,true
+tx[2]=0xe6faa6fd9baba50ebb05eadc8fad293e4d30d32d,0,0x173825d9000000000000000000000000a55a151eb00fded1634d27d1127b4be4627079ea,true
+confirmations[0, 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=true
+confirmations[0, 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=false
+confirmations[1, 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=true
+confirmations[1, 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=false
+confirmations[2, 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976]=true
+confirmations[2, 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0]=false
+Submission 0 #2824 transactionId=2
+Confirmation 0 #2824 sender=0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976 transactionId=2
+Execution 0 #2824 transactionId=2
+OwnerRemoval 0 #2824 owner=0xa55a151eb00fded1634d27d1127b4be4627079ea
 

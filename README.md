@@ -1,10 +1,10 @@
-# ConsenSys MultiSig Wallet Audit (Work In Progress)
+# ConsenSys MultiSig Wallet Audit
+
+Status: Work in progress
 
 The source code for [contracts/MultiSigWallet.sol](contracts/MultiSigWallet.sol) is the same as
 [https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol](https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol),
 with only the minimum solidity version statement upgraded from `pragma solidity 0.4.4;` to `pragma solidity ^0.4.11;`.
-
-To help fund the independent audit of these sorts of public goods, please send your donation to [0x000001f568875f378bf6d170b790967fe429c81a](https://etherscan.io/address/0x000001f568875f378bf6d170b790967fe429c81a).
 
 <br />
 
@@ -12,9 +12,45 @@ To help fund the independent audit of these sorts of public goods, please send y
 
 ## Table Of Contents
 
+* [Bug Bounty](#bug-bounty)
+  * [Rules And Rewards](#rules-and-rewards)
+  * [The BokkyPooBah Hall Of Fame](#the-bokkypoobah-hall-of-fame)
 * [Testing](#testing)
-* [Source Code](#source-code)
+* [Code Review](#code-review)
 * [Function Signatures](#function-signatures)
+
+<br />
+
+<hr />
+
+## Bug Bounty
+
+I am offering a bug bounty of up to 10 ETH for any serious bugs found in this multisig.
+
+The bug bounty account is at [0x1ba18f569a3cbd97725153be727eae094a7b42f3](https://etherscan.io/address/0x1ba18f569a3cbd97725153be727eae094a7b42f3).
+
+If you want to support the audit of this kind of public goods, any donations to the account above during the months of July to September 2017 will
+go into this general bug bounty, and the bounties awarded will be increased.
+
+This bug bounty is currently applicable to the following projects:
+
+* Whitelisted Multisig Audit (this project) at [https://github.com/bokkypoobah/WhitelistedMultisigAudit](https://github.com/bokkypoobah/WhitelistedMultisigAudit)
+* ConsenSys Multisig Audit at [https://github.com/bokkypoobah/ConsenSysMultiSigWalletAudit](https://github.com/bokkypoobah/ConsenSysMultiSigWalletAudit)
+
+<br />
+
+### Rules And Rewards
+
+* Bugs that have already been submitted by another user or are already known to the BokkyPooBah are not eligible for bounty rewards.
+* Public disclosure of a vulnerability makes it ineligible for a bounty.
+* You can deploy the contracts on your private chain for bug hunting. Please respect the Ethereum Mainnet and Testnet and refrain from attacking them.
+* The value of rewards paid out will depend on the severity of the bugs found. Determinations of this amount is at the sole and final discretion of the BokkyPooBah but the BokkyPooBah will be fair.
+
+<br />
+
+### The BokkyPooBah Hall Of Fame
+
+If you do find any bugs in the above projects, you will enter [The BokkyPooBah Hall of Fame](https://github.com/bokkypoobah/TokenTrader/wiki/TokenTraderFactory-And-TokenSellerFactory-Bug-Bounty#the-bokkypoobah-hall-of-fame)
 
 <br />
 
@@ -28,7 +64,7 @@ Testing being conducted in [test](test) (work in progress).
 
 <hr />
 
-## Source Code
+## Code Review
 
 ```javascript
 // BK Ok
@@ -403,14 +439,18 @@ contract MultiSigWallet {
     /// @param pending Include pending transactions.
     /// @param executed Include executed transactions.
     /// @return Total number of transactions after filters are applied.
+    // BK Ok - Constant function
     function getTransactionCount(bool pending, bool executed)
         public
         constant
         returns (uint count)
     {
+        // BK Ok
         for (uint i=0; i<transactionCount; i++)
+            // BK Ok
             if (   pending && !transactions[i].executed
                 || executed && transactions[i].executed)
+                // BK Ok
                 count += 1;
     }
 
