@@ -25,7 +25,8 @@ with only the minimum solidity version statement upgraded from `pragma solidity 
 
 ## Bug Bounty
 
-I am offering a bug bounty of up to 20 ETH for any serious bugs found in this multisig.
+To try to avoid [Parity Multisig](https://github.com/bokkypoobah/ParityMultisigRecoveryReconciliation) type hacks, I am offering a bug bounty of up
+to 20 ETH for any serious bugs found in this multisig.
 
 The bug bounty account is at [0x1ba18f569a3cbd97725153be727eae094a7b42f3](https://etherscan.io/address/0x1ba18f569a3cbd97725153be727eae094a7b42f3).
 
