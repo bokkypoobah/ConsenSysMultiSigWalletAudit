@@ -18,6 +18,7 @@ with only the minimum solidity version statement upgraded from `pragma solidity 
 * [Testing](#testing)
 * [Code Review](#code-review)
 * [Function Signatures](#function-signatures)
+* [References](#references)
 
 <br />
 
@@ -555,6 +556,14 @@ y        dc8452cd required()
 y        b77bf600 transactionCount()
 y        9ace38c2 transactions(uint256)
 ```
+
+<br />
+
+<hr />
+
+## References
+
+* [Ethereum Contract Security Techniques and Tips](https://github.com/ConsenSys/smart-contract-best-practices)
 
 <br />
 
