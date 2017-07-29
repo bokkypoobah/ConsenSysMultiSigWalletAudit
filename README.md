@@ -34,8 +34,8 @@ go into this general bug bounty, and the bounties awarded will be increased.
 
 This bug bounty is currently applicable to the following projects:
 
-* Whitelisted Multisig Audit (this project) at [https://github.com/bokkypoobah/WhitelistedMultisigAudit](https://github.com/bokkypoobah/WhitelistedMultisigAudit)
-* ConsenSys Multisig Audit at [https://github.com/bokkypoobah/ConsenSysMultiSigWalletAudit](https://github.com/bokkypoobah/ConsenSysMultiSigWalletAudit)
+* Whitelisted Multisig Audit at [https://github.com/bokkypoobah/WhitelistedMultisigAudit](https://github.com/bokkypoobah/WhitelistedMultisigAudit)
+* ConsenSys Multisig Audit (this project) at [https://github.com/bokkypoobah/ConsenSysMultiSigWalletAudit](https://github.com/bokkypoobah/ConsenSysMultiSigWalletAudit)
 
 <br />
 
@@ -546,3 +546,9 @@ y        dc8452cd required()
 y        b77bf600 transactionCount()
 y        9ace38c2 transactions(uint256)
 ```
+
+<br />
+
+<br />
+
+Enjoy. (c) BokkyPooBah / Bok Consulting Pty Ltd and other respective authors July 29 2017. The MIT Licence.
