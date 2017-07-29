@@ -6,6 +6,11 @@ The source code for [contracts/MultiSigWallet.sol](contracts/MultiSigWallet.sol)
 [https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol](https://github.com/ConsenSys/MultiSigWallet/blob/e3240481928e9d2b57517bd192394172e31da487/contracts/solidity/MultiSigWallet.sol),
 with only the minimum solidity version statement upgraded from `pragma solidity 0.4.4;` to `pragma solidity ^0.4.11;`.
 
+Some further information on the ConsenSys multisig wallet:
+
+* [The Gnosis MultiSig Wallet and our Commitment to Security](https://blog.gnosis.pm/the-gnosis-multisig-wallet-and-our-commitment-to-security-ce9aca0d17f6)
+* [Release of new Multisig Wallet](https://blog.gnosis.pm/release-of-new-multisig-wallet-59b6811f7edc)
+
 <br />
 
 <hr />
