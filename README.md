@@ -28,6 +28,8 @@ with only the minimum solidity version statement upgraded from `pragma solidity 
 To try to avoid [Parity Multisig](https://github.com/bokkypoobah/ParityMultisigRecoveryReconciliation) type hacks, I am offering a bug bounty of up
 to 20 ETH for any serious bugs found in this multisig.
 
+I have also been told that Satoshi Fund will pay a bug bounty on this smart contract.
+
 The bug bounty account is at [0x1ba18f569a3cbd97725153be727eae094a7b42f3](https://etherscan.io/address/0x1ba18f569a3cbd97725153be727eae094a7b42f3).
 
 If you want to support the audit of this kind of public goods, any donations to the account above during the months of July to September 2017 will
@@ -66,6 +68,12 @@ Testing being conducted in [test](test) (work in progress).
 <hr />
 
 ## Code Review
+
+Status: 1/2 way through.
+
+Source code [contracts/WhitelistedMultisig.sol](contracts/WhitelistedMultisig.sol).
+
+<br />
 
 ```javascript
 // BK Ok
